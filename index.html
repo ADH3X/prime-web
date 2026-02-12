@@ -9,7 +9,10 @@
 <body>
   <header class="header">
     <div class="container header-inner">
-      <img src="assets/img/logo.png" alt="PRIME" class="logo"/>
+      <a href="index.html" class="brand">
+        <img src="assets/img/logo.png" alt="PRIME" class="logo"/>
+      </a>
+
       <nav>
         <a href="index.html">Inicio</a>
         <a href="catalog.html">Catálogo</a>
@@ -19,14 +22,48 @@
     </div>
   </header>
 
-  <section class="hero">
-    <div class="container">
-      <h1>Potenciá tu rendimiento</h1>
-      <p>Suplementos originales, envíos en Bolivia.</p>
-      <a href="catalog.html" class="btn-primary">Ver Catálogo</a>
+  <!-- HERO SLIDER -->
+  <section id="hero-slider" class="hero-slider">
+    <div class="slides"></div>
+
+    <button class="nav prev" aria-label="Anterior">‹</button>
+    <button class="nav next" aria-label="Siguiente">›</button>
+
+    <div class="dots"></div>
+  </section>
+
+  <!-- BARRA DE CONFIANZA -->
+  <section class="trustbar">
+    <div class="container trustgrid">
+      <div class="trustitem">
+        <div class="trusttitle">100% Original</div>
+        <div class="trusttext">Proveedores verificados</div>
+      </div>
+      <div class="trustitem">
+        <div class="trusttitle">Envíos Bolivia</div>
+        <div class="trusttext">Coordinación por WhatsApp</div>
+      </div>
+      <div class="trustitem">
+        <div class="trusttitle">Atención rápida</div>
+        <div class="trusttext">2 números disponibles</div>
+      </div>
     </div>
   </section>
 
+  <!-- CATEGORÍAS (NO PRODUCTOS) -->
+  <section class="container">
+    <h2>Comprar por categoría</h2>
+    <div class="catgrid">
+      <a class="catcard" href="catalog.html#creatinas">Creatinas</a>
+      <a class="catcard" href="catalog.html#proteinas">Proteínas</a>
+      <a class="catcard" href="catalog.html#preentrenos">Pre-entrenos</a>
+      <a class="catcard" href="catalog.html#vitaminas">Vitaminas</a>
+      <a class="catcard" href="catalog.html#combos">Combos</a>
+      <a class="catcard" href="catalog.html#ofertas">Ofertas</a>
+    </div>
+  </section>
+
+  <!-- RECIÉN ABAJO: DESTACADOS -->
   <section class="container">
     <h2>Productos destacados</h2>
     <div id="featured-products" class="grid"></div>
@@ -38,5 +75,6 @@
 
   <script src="assets/js/app.js"></script>
   <script src="assets/js/cart.js"></script>
+  <script src="assets/js/slider.js"></script>
 </body>
 </html>

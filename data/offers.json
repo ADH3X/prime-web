@@ -1,0 +1,29 @@
+[
+  {
+    "title": "OFERTA FLASH",
+    "headline": "Creatina Monohidratada 300g",
+    "subtitle": "Original • Envíos en Bolivia",
+    "badge": "-10%",
+    "ctaText": "Ver Catálogo",
+    "ctaLink": "catalog.html",
+    "image": "assets/img/banners/hero1.jpg"
+  },
+  {
+    "title": "PACKS DEL MOMENTO",
+    "headline": "Proteína + Creatina",
+    "subtitle": "Ahorra comprando en combo",
+    "badge": "COMBO",
+    "ctaText": "Comprar por WhatsApp",
+    "ctaLink": "catalog.html#checkout",
+    "image": "assets/img/banners/hero2.jpg"
+  },
+  {
+    "title": "NUEVOS INGRESOS",
+    "headline": "Top ventas PRIME",
+    "subtitle": "Stock limitado • Consultá disponibilidad",
+    "badge": "NEW",
+    "ctaText": "Explorar",
+    "ctaLink": "catalog.html",
+    "image": "assets/img/banners/hero3.jpg"
+  }
+]

@@ -6,22 +6,82 @@
   --muted: #b3b3b3;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
 
-body { background: var(--bg); color: var(--text); }
+body {
+  background: var(--bg);
+  color: var(--text);
+}
 
-.container { width: 90%; max-width: 1200px; margin: 0 auto; }
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-.header { background: #000; border-bottom: 1px solid #222; }
-.header-inner { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; }
-.logo { height: 40px; }
-nav a { color: var(--text); margin-left: 15px; text-decoration: none; }
-nav a:hover { color: var(--gold); }
+/* HEADER */
+.header {
+  background: #000;
+  border-bottom: 1px solid #222;
+}
 
-.hero { padding: 80px 0; background: linear-gradient(135deg, #000, #1a1a1a); text-align: center; }
-.hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
-.hero p { color: var(--muted); margin-bottom: 20px; }
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 0;
 
+  /* Mobile friendly */
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  height: 40px;
+}
+
+nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+nav a:hover {
+  color: var(--gold);
+  background: rgba(255,255,255,0.05);
+}
+
+/* HERO SIMPLE (si lo usas en alguna página) */
+.hero {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #000, #1a1a1a);
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+/* BOTONES */
 .btn-primary {
   background: var(--gold);
   color: #000;
@@ -29,8 +89,15 @@ nav a:hover { color: var(--gold); }
   text-decoration: none;
   border-radius: 6px;
   font-weight: bold;
+  border: none;
+  cursor: pointer;
 }
 
+.btn-primary:hover {
+  filter: brightness(1.05);
+}
+
+/* GRID PRODUCTOS */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -45,23 +112,47 @@ nav a:hover { color: var(--gold); }
   border: 1px solid #222;
 }
 
-.card img { width: 100%; border-radius: 6px; }
-.card h3 { margin: 10px 0 5px; }
-.price { color: var(--gold); font-weight: bold; }
+.card img {
+  width: 100%;
+  border-radius: 6px;
+  display: block;
+}
+
+.card h3 {
+  margin: 10px 0 5px;
+}
+
+.price {
+  color: var(--gold);
+  font-weight: bold;
+}
 
 .btn-add {
   display: block;
   margin-top: 10px;
   background: #222;
   color: var(--text);
-  padding: 8px;
+  padding: 10px;
   text-align: center;
   border-radius: 6px;
   cursor: pointer;
+  border: 1px solid #2b2b2b;
 }
-.btn-add:hover { background: var(--gold); color: #000; }
 
-.footer { border-top: 1px solid #222; padding: 20px; text-align: center; color: var(--muted); }
+.btn-add:hover {
+  background: var(--gold);
+  color: #000;
+}
+
+/* FOOTER */
+.footer {
+  border-top: 1px solid #222;
+  padding: 20px;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* CHECKOUT BOX (Catálogo) */
 .checkout-box {
   background: #111;
   border: 1px solid #222;
@@ -75,7 +166,7 @@ nav a:hover { color: var(--gold); }
 }
 
 .checkout-box p {
-  color: #b3b3b3;
+  color: var(--muted);
   margin-bottom: 12px;
 }
 
@@ -88,9 +179,9 @@ nav a:hover { color: var(--gold); }
 .wa-buttons .btn-primary {
   flex: 1;
   min-width: 220px;
-  border: none;
-  cursor: pointer;
 }
+
+/* PRODUCT DETAIL */
 .product-detail-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -98,8 +189,58 @@ nav a:hover { color: var(--gold); }
   margin: 40px 0;
 }
 
+/* INPUT */
+input[type="text"] {
+  width: 100%;
+  margin: 15px 0 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #222;
+  background: #111;
+  color: var(--text);
+}
+
+input[type="text"]::placeholder {
+  color: #8a8a8a;
+}
+
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .product-detail-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  nav {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .logo {
+    height: 34px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .wa-buttons {
+    flex-direction: column;
+  }
+
+  .wa-buttons .btn-primary {
+    min-width: 100%;
   }
 }
