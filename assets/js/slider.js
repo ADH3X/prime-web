@@ -1,167 +1,127 @@
-// ===============================
-// PRIME - HERO SLIDER (limpio)
-// - Lee data/offers.json
-// - Renderiza slides (1 o más)
-// - Si hay 1 slide: oculta flechas + dots
-// - CTA: abre selector con 2 WhatsApp + mensaje
-// ===============================
-
-const WA_NUMBERS = [
-  "59169259870", // WhatsApp #1 (tu número)
-  "59170000000"  // WhatsApp #2 (cámbialo por el real)
-];
-
-const OFFERS_URL = "data/offers.json";
-
-document.addEventListener("DOMContentLoaded", () => {
-  initHeroSlider();
-});
-
-async function initHeroSlider() {
-  const slider = document.querySelector("#hero-slider");
+// assets/js/slider.js
+(() => {
+  const slider = document.getElementById("hero-slider");
   if (!slider) return;
 
   const slidesWrap = slider.querySelector(".slides");
-  const dotsWrap = slider.querySelector(".dots");
   const prevBtn = slider.querySelector(".prev");
   const nextBtn = slider.querySelector(".next");
+  const dotsWrap = slider.querySelector(".dots");
 
-  // Limpieza total (evita duplicados)
-  slidesWrap.innerHTML = "";
-  dotsWrap.innerHTML = "";
+  // Fallback si falla offers.json
+  const FALLBACK_OFFERS = [
+    {
+      image: "assets/img/banners/hero1.jpg",
+      ctaLink: "https://wa.me/59169259870?text=Hola%20PRIME%2C%20me%20interesa%20el%20combo%20Prote%C3%ADna%20%2B%20Creatina%20Dragon%20Pharma%20%2B%20Shaker%20que%20vi%20en%20su%20web.%20%C2%BFSigue%20disponible%3F%20Precio%3A%20800bs",
+      alt: "Oferta PRIME"
+    }
+  ];
 
   let offers = [];
-  try {
-    const res = await fetch(OFFERS_URL, { cache: "no-store" });
-    offers = await res.json();
-  } catch (e) {
-    console.error("No se pudo cargar offers.json", e);
-    return;
+  let index = 0;
+  let timer = null;
+
+  function escapeHTML(str = "") {
+    return str.replace(/[&<>"']/g, (m) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[m]));
   }
 
-  if (!Array.isArray(offers) || offers.length === 0) return;
-
-  // Render slides
-  offers.forEach((offer, idx) => {
-    const slide = document.createElement("div");
-    slide.className = "slide";
-    slide.style.backgroundImage = `url('${offer.image}')`;
-
-    // overlay + CTA
-    const overlay = document.createElement("div");
-    overlay.className = "hero-overlay";
-
-    const cta = document.createElement("button");
-    cta.className = "btn-primary hero-cta";
-    cta.type = "button";
-    cta.textContent = offer.ctaText || "Comprar por WhatsApp";
-
-    const message =
-      offer.waMessage ||
-      "Hola PRIME, me interesa el combo Proteína + Creatina Dragon Pharma + Shaker que vi en su web. ¿Sigue disponible? Precio: 800bs";
-
-    cta.addEventListener("click", () => openWhatsAppChooser(message));
-
-    overlay.appendChild(cta);
-    slide.appendChild(overlay);
-    slidesWrap.appendChild(slide);
-
-    // dots
-    const dot = document.createElement("button");
-    dot.type = "button";
-    dot.className = "dot";
-    dot.setAttribute("aria-label", `Ir al slide ${idx + 1}`);
-    dot.addEventListener("click", () => goTo(idx));
-    dotsWrap.appendChild(dot);
-  });
-
-  const slides = Array.from(slidesWrap.querySelectorAll(".slide"));
-  const dots = Array.from(dotsWrap.querySelectorAll(".dot"));
-
-  let index = 0;
-
   function render() {
-    slides.forEach((s, i) => s.classList.toggle("active", i === index));
-    dots.forEach((d, i) => d.classList.toggle("active", i === index));
+    // limpia siempre (evita “slides fantasma”)
+    slidesWrap.innerHTML = "";
+    dotsWrap.innerHTML = "";
+
+    offers.forEach((o, i) => {
+      const slide = document.createElement("a");
+      slide.className = "slide" + (i === index ? " active" : "");
+      slide.href = o.ctaLink || "#";
+      slide.target = o.ctaLink?.startsWith("http") ? "_blank" : "_self";
+      slide.rel = "noopener";
+      slide.style.backgroundImage = `url('${o.image}')`;
+      slide.setAttribute("aria-label", o.alt || o.headline || `Oferta ${i + 1}`);
+
+      // Overlay suave para legibilidad (aunque no uses texto)
+      const overlay = document.createElement("div");
+      overlay.className = "slide-overlay";
+      slide.appendChild(overlay);
+
+      slidesWrap.appendChild(slide);
+
+      const dot = document.createElement("button");
+      dot.className = "dot" + (i === index ? " active" : "");
+      dot.type = "button";
+      dot.setAttribute("aria-label", `Ir a oferta ${i + 1}`);
+      dot.addEventListener("click", () => goTo(i));
+      dotsWrap.appendChild(dot);
+    });
+
+    // Si solo hay 1 slide, ocultamos flechas y dots (porque confunde)
+    const many = offers.length > 1;
+    prevBtn.style.display = many ? "grid" : "none";
+    nextBtn.style.display = many ? "grid" : "none";
+    dotsWrap.style.display = many ? "flex" : "none";
   }
 
   function goTo(i) {
-    index = i;
+    index = (i + offers.length) % offers.length;
     render();
+    restartAutoplay();
   }
 
-  function next() {
-    index = (index + 1) % slides.length;
+  function next() { goTo(index + 1); }
+  function prev() { goTo(index - 1); }
+
+  function restartAutoplay() {
+    if (timer) clearInterval(timer);
+    if (offers.length <= 1) return;
+    timer = setInterval(next, 6000);
+  }
+
+  async function loadOffers() {
+    try {
+      const res = await fetch("data/offers.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("No se pudo cargar offers.json");
+
+      const data = await res.json();
+      if (!Array.isArray(data) || data.length === 0) throw new Error("offers.json vacío");
+
+      // Normaliza campos mínimos
+      offers = data.map((o) => ({
+        image: o.image,
+        ctaLink: o.ctaLink,
+        alt: o.headline || o.title || "Oferta PRIME"
+      })).filter(o => o.image);
+
+      if (offers.length === 0) throw new Error("Sin imágenes válidas en offers.json");
+    } catch (e) {
+      // fallback
+      offers = FALLBACK_OFFERS;
+    }
+
+    index = 0;
     render();
+    restartAutoplay();
   }
 
-  function prev() {
-    index = (index - 1 + slides.length) % slides.length;
-    render();
-  }
+  prevBtn.addEventListener("click", prev);
+  nextBtn.addEventListener("click", next);
 
-  // Botones
-  prevBtn?.addEventListener("click", prev);
-  nextBtn?.addEventListener("click", next);
+  // Swipe en móvil
+  let startX = 0;
+  slidesWrap.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  }, { passive: true });
 
-  // Si hay 1 solo slide: escondemos flechas y dots
-  if (slides.length === 1) {
-    if (prevBtn) prevBtn.style.display = "none";
-    if (nextBtn) nextBtn.style.display = "none";
-    if (dotsWrap) dotsWrap.style.display = "none";
-  } else {
-    if (prevBtn) prevBtn.style.display = "";
-    if (nextBtn) nextBtn.style.display = "";
-    if (dotsWrap) dotsWrap.style.display = "";
-  }
+  slidesWrap.addEventListener("touchend", (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - startX;
+    if (Math.abs(diff) > 50) diff < 0 ? next() : prev();
+  }, { passive: true });
 
-  // Inicial
-  render();
-}
-
-// ===============================
-// WhatsApp chooser (2 números)
-// ===============================
-function openWhatsAppChooser(message) {
-  const msg = encodeURIComponent(message);
-
-  // Backdrop
-  const backdrop = document.createElement("div");
-  backdrop.className = "wa-modal-backdrop";
-
-  // Modal
-  const modal = document.createElement("div");
-  modal.className = "wa-modal";
-  modal.innerHTML = `
-    <div class="wa-modal-head">
-      <div class="wa-modal-title">Elegí un WhatsApp</div>
-      <button class="wa-modal-close" type="button" aria-label="Cerrar">×</button>
-    </div>
-    <div class="wa-modal-body">
-      <button class="wa-modal-btn" data-wa="0" type="button">WhatsApp 1</button>
-      <button class="wa-modal-btn" data-wa="1" type="button">WhatsApp 2</button>
-      <div class="wa-modal-note">Se abrirá WhatsApp con el mensaje listo.</div>
-    </div>
-  `;
-
-  backdrop.appendChild(modal);
-  document.body.appendChild(backdrop);
-
-  // Cerrar
-  const close = () => backdrop.remove();
-  backdrop.addEventListener("click", (e) => {
-    if (e.target === backdrop) close();
-  });
-  modal.querySelector(".wa-modal-close").addEventListener("click", close);
-
-  // Abrir WhatsApp
-  modal.querySelectorAll(".wa-modal-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const idx = Number(btn.getAttribute("data-wa"));
-      const number = WA_NUMBERS[idx] || WA_NUMBERS[0];
-      const url = `https://wa.me/${number}?text=${msg}`;
-      window.open(url, "_blank");
-      close();
-    });
-  });
-}
+  loadOffers();
+})();
