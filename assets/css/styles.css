@@ -438,3 +438,64 @@ input[type="text"]::placeholder {
   .hero-slider .prev { left: 10px; }
   .hero-slider .next { right: 10px; }
 }
+/* ===== HERO (banner) estético en PC y celular ===== */
+.hero-slider{
+  width: 100%;
+  background: #000;
+  overflow: hidden;
+
+  /* altura controlada (NO gigante) */
+  height: clamp(260px, 42vw, 520px);
+}
+
+.hero-slider .slides{
+  height: 100%;
+}
+
+.hero-slider .slide{
+  height: 100%;
+  display: block;
+  border-radius: 14px;
+}
+
+/* Centrado y bordes estéticos dentro del container */
+#hero-slider{
+  padding: 18px 0;
+}
+
+#hero-slider .slides{
+  width: min(1200px, 92%);
+  margin: 0 auto;
+}
+
+.hero-slider .slide{
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Overlay suave */
+.hero-slider .slide-overlay{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.35) 0%,
+    rgba(0,0,0,0.15) 45%,
+    rgba(0,0,0,0.35) 100%
+  );
+}
+
+/* Mobile: un poco menos alto */
+@media (max-width: 520px){
+  .hero-slider{
+    height: 300px;
+  }
+  #hero-slider{
+    padding: 12px 0;
+  }
+  #hero-slider .slides{
+    width: 94%;
+  }
+}
