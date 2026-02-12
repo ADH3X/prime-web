@@ -7,14 +7,16 @@
   <link rel="stylesheet" href="assets/css/styles.css"/>
 </head>
 <body>
+
   <header class="header">
     <div class="container header-inner">
-      <!-- Logo = Inicio (intuitivo) -->
-      <a href="index.html" class="brand" aria-label="PRIME - Inicio">
+      <!-- El logo es el botón de inicio -->
+      <a href="index.html" class="brand" aria-label="Ir al inicio">
         <img src="assets/img/logo.png" alt="PRIME" class="logo"/>
       </a>
 
       <nav class="nav">
+        <!-- Quitado "Inicio" -->
         <a href="catalog.html">Catálogo</a>
         <a href="about.html">Envíos & Garantía</a>
         <a href="#" id="cart-btn">Carrito (<span id="cart-count">0</span>)</a>
@@ -22,14 +24,14 @@
     </div>
   </header>
 
-  <!-- HERO SLIDER (SOLO ESTO EN EL INDEX) -->
-  <section id="hero-slider" class="hero-slider">
+  <!-- SOLO SLIDER -->
+  <section id="hero-slider" class="hero-slider" aria-label="Ofertas del momento">
     <div class="slides"></div>
 
-    <button class="nav-btn prev" type="button" aria-label="Anterior">‹</button>
-    <button class="nav-btn next" type="button" aria-label="Siguiente">›</button>
+    <button class="nav prev" aria-label="Anterior">‹</button>
+    <button class="nav next" aria-label="Siguiente">›</button>
 
-    <div class="dots"></div>
+    <div class="dots" aria-label="Indicadores"></div>
   </section>
 
   <script src="assets/js/cart.js"></script>
