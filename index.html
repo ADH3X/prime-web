@@ -2,32 +2,36 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PRIME Suplementos</title>
-  <link rel="stylesheet" href="assets/css/styles.css"/>
+  <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
-<body>
 
+<body>
+  <!-- HEADER -->
   <header class="header">
     <div class="container header-inner">
       <!-- LOGO = BOTÓN DE INICIO -->
       <a href="index.html" class="brand" aria-label="Ir al inicio">
-        <img src="assets/img/logo.png" alt="PRIME" class="logo"/>
+        <img src="assets/img/logo.png" alt="PRIME" class="logo" />
       </a>
 
-      <nav class="nav">
+      <nav class="nav" aria-label="Navegación principal">
         <a href="catalog.html">Catálogo</a>
-        <a href="about.html">Envíos & Garantía</a>
+        <a href="about.html">Envíos &amp; Garantía</a>
         <a href="#" id="cart-btn">Carrito (<span id="cart-count">0</span>)</a>
       </nav>
     </div>
   </header>
 
-  <!-- SLIDER (1 sola imagen clickeable a WhatsApp) -->
-  <section id="hero-slider" class="hero-slider" aria-label="Oferta principal">
-    <div class="slides"></div>
-  </section>
+  <!-- SLIDER (se llena SOLO desde data/offers.json) -->
+  <main>
+    <section id="hero-slider" class="hero-slider" aria-label="Oferta principal">
+      <div class="slides" aria-live="polite"></div>
+    </section>
+  </main>
 
+  <!-- JS -->
   <script src="assets/js/cart.js"></script>
   <script src="assets/js/slider.js"></script>
 </body>

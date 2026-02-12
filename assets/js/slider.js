@@ -4,10 +4,7 @@
   if (!slider) return;
 
   const slidesWrap = slider.querySelector(".slides");
-  if (!slidesWrap) {
-    console.error("[SLIDER] Falta .slides dentro de #hero-slider");
-    return;
-  }
+  if (!slidesWrap) return;
 
   const FALLBACK = [
     {
@@ -18,54 +15,115 @@
     }
   ];
 
+  const AUTOPLAY_MS = 4500;
+  let offers = [];
+  let current = 0;
+  let timer = null;
+
   function buildWaLink(number, message) {
     const clean = String(number || "").replace(/[^\d]/g, "");
     const text = encodeURIComponent(message || "");
     return `https://wa.me/${clean}?text=${text}`;
   }
 
-  function renderOne(offer) {
+  function clearUIExtras() {
+    slider.querySelectorAll(".nav, .dots").forEach((el) => el.remove());
+  }
+
+  function render() {
     slidesWrap.innerHTML = "";
+    clearUIExtras();
 
-    const link = buildWaLink(offer.waNumber, offer.waMessage);
+    // slides
+    offers.forEach((o, idx) => {
+      const a = document.createElement("a");
+      a.className = "slide" + (idx === current ? " active" : "");
+      a.href = buildWaLink(o.waNumber, o.waMessage);
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.style.backgroundImage = `url("${o.image}")`;
 
-    const a = document.createElement("a");
-    a.className = "slide active";
-    a.href = link;
-    a.target = "_blank";
-    a.rel = "noopener";
+      const overlay = document.createElement("div");
+      overlay.className = "hero-overlay";
+      a.appendChild(overlay);
 
-    // Fondo
-    a.style.backgroundImage = `url("${offer.image}")`;
+      slidesWrap.appendChild(a);
+    });
 
-    // Overlay (MISMO nombre que el CSS final)
-    const overlay = document.createElement("div");
-    overlay.className = "hero-overlay";
-    a.appendChild(overlay);
+    // Si hay 1: no flechas/dots/autoplay
+    if (offers.length <= 1) return;
 
-    slidesWrap.appendChild(a);
+    // Flechas
+    const prev = document.createElement("button");
+    prev.className = "nav prev";
+    prev.type = "button";
+    prev.innerHTML = "‹";
+    prev.addEventListener("click", () => goTo(current - 1, true));
 
-    // Debug real: si la imagen no carga, lo sabés
-    const testImg = new Image();
-    testImg.onload = () => console.log("[SLIDER] Imagen OK:", offer.image);
-    testImg.onerror = () =>
-      console.error("[SLIDER] No carga la imagen. Revisa ruta/nombre:", offer.image);
-    testImg.src = offer.image;
+    const next = document.createElement("button");
+    next.className = "nav next";
+    next.type = "button";
+    next.innerHTML = "›";
+    next.addEventListener("click", () => goTo(current + 1, true));
+
+    slider.appendChild(prev);
+    slider.appendChild(next);
+
+    // Dots
+    const dots = document.createElement("div");
+    dots.className = "dots";
+
+    offers.forEach((_, idx) => {
+      const d = document.createElement("button");
+      d.className = "dot" + (idx === current ? " active" : "");
+      d.type = "button";
+      d.addEventListener("click", () => goTo(idx, true));
+      dots.appendChild(d);
+    });
+
+    slider.appendChild(dots);
+  }
+
+  function goTo(index, userAction = false) {
+    if (!offers.length) return;
+
+    current = (index + offers.length) % offers.length;
+    render();
+
+    if (userAction) restartAutoplay();
+  }
+
+  function startAutoplay() {
+    if (offers.length <= 1) return;
+    timer = setInterval(() => goTo(current + 1, false), AUTOPLAY_MS);
+  }
+
+  function stopAutoplay() {
+    if (timer) clearInterval(timer);
+    timer = null;
+  }
+
+  function restartAutoplay() {
+    stopAutoplay();
+    startAutoplay();
   }
 
   async function init() {
-    let offers = FALLBACK;
+    offers = FALLBACK;
 
     try {
       const res = await fetch("data/offers.json", { cache: "no-store" });
-      if (!res.ok) throw new Error("offers.json no encontrado");
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) offers = data;
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length) offers = data;
+      }
     } catch (e) {
-      console.warn("[SLIDER] Usando FALLBACK:", e?.message || e);
+      console.warn("[SLIDER] offers.json no carga, usando FALLBACK", e);
     }
 
-    renderOne(offers[0]);
+    current = 0;
+    render();
+    startAutoplay();
   }
 
   init();
