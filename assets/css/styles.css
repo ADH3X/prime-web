@@ -94,35 +94,53 @@ nav a:hover {
 }
 
 /* ===============================
-   HERO SLIDER (FULL VISUAL)
+   HERO SLIDER (UNA SOLA VERSION)
+   - Estético en PC y celular
+   - Sin full-screen raro
+   - Sin CSS duplicado
 =============================== */
+#hero-slider {
+  padding: 18px 0;
+}
+
+/* contenedor negro */
 .hero-slider {
-  position: relative;
-  height: calc(100vh - 72px);
-  min-height: 520px;
+  width: 100%;
   background: #000;
   overflow: hidden;
+
+  /* altura controlada (no gigante) */
+  height: clamp(260px, 42vw, 520px);
 }
 
+/* el carrusel ocupa esa altura */
 .hero-slider .slides {
-  position: relative;
   height: 100%;
+  width: min(1200px, 92%);
+  margin: 0 auto;
+  position: relative;
 }
 
+/* slide por fondo (lo pone slider.js) */
 .hero-slider .slide {
   position: absolute;
   inset: 0;
+  height: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55);
   background-size: cover;
   background-position: center;
+
   opacity: 0;
-  transition: opacity .45s ease;
+  transition: opacity .35s ease;
 }
 
 .hero-slider .slide.active {
   opacity: 1;
 }
 
-/* Overlay suave para que el botón se lea */
+/* overlay + CTA centrado */
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -130,11 +148,12 @@ nav a:hover {
   align-items: center;
   justify-content: center;
   background: linear-gradient(
-    90deg,
-    rgba(0,0,0,0.45) 0%,
-    rgba(0,0,0,0.20) 55%,
-    rgba(0,0,0,0.10) 100%
+    180deg,
+    rgba(0,0,0,0.35) 0%,
+    rgba(0,0,0,0.12) 45%,
+    rgba(0,0,0,0.35) 100%
   );
+  border-radius: 14px;
 }
 
 .hero-cta {
@@ -156,7 +175,7 @@ nav a:hover {
   background: rgba(0,0,0,0.35);
   color: #fff;
   cursor: pointer;
-  z-index: 5;
+  z-index: 6;
   display: grid;
   place-items: center;
   font-size: 30px;
@@ -179,7 +198,7 @@ nav a:hover {
   display: flex;
   justify-content: center;
   gap: 10px;
-  z-index: 5;
+  z-index: 7;
 }
 
 .hero-slider .dot {
@@ -388,11 +407,6 @@ input[type="text"]::placeholder {
     grid-template-columns: 1fr;
   }
 
-  .hero-slider {
-    height: calc(100vh - 62px);
-    min-height: 520px;
-  }
-
   .logo {
     height: 34px;
   }
@@ -426,8 +440,17 @@ input[type="text"]::placeholder {
     min-width: 100%;
   }
 
+  /* slider más compacto en celu */
   .hero-slider {
-    min-height: 420px;
+    height: 300px;
+  }
+
+  #hero-slider {
+    padding: 12px 0;
+  }
+
+  .hero-slider .slides {
+    width: 94%;
   }
 
   .hero-cta {
@@ -437,65 +460,4 @@ input[type="text"]::placeholder {
 
   .hero-slider .prev { left: 10px; }
   .hero-slider .next { right: 10px; }
-}
-/* ===== HERO (banner) estético en PC y celular ===== */
-.hero-slider{
-  width: 100%;
-  background: #000;
-  overflow: hidden;
-
-  /* altura controlada (NO gigante) */
-  height: clamp(260px, 42vw, 520px);
-}
-
-.hero-slider .slides{
-  height: 100%;
-}
-
-.hero-slider .slide{
-  height: 100%;
-  display: block;
-  border-radius: 14px;
-}
-
-/* Centrado y bordes estéticos dentro del container */
-#hero-slider{
-  padding: 18px 0;
-}
-
-#hero-slider .slides{
-  width: min(1200px, 92%);
-  margin: 0 auto;
-}
-
-.hero-slider .slide{
-  border: 1px solid rgba(255,255,255,0.10);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.55);
-  background-size: cover;
-  background-position: center;
-}
-
-/* Overlay suave */
-.hero-slider .slide-overlay{
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0,0,0,0.35) 0%,
-    rgba(0,0,0,0.15) 45%,
-    rgba(0,0,0,0.35) 100%
-  );
-}
-
-/* Mobile: un poco menos alto */
-@media (max-width: 520px){
-  .hero-slider{
-    height: 300px;
-  }
-  #hero-slider{
-    padding: 12px 0;
-  }
-  #hero-slider .slides{
-    width: 94%;
-  }
 }
