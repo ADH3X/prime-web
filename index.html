@@ -9,12 +9,12 @@
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="brand">
+      <!-- Logo = Inicio (intuitivo) -->
+      <a href="index.html" class="brand" aria-label="PRIME - Inicio">
         <img src="assets/img/logo.png" alt="PRIME" class="logo"/>
       </a>
 
-      <nav>
-        <a href="index.html">Inicio</a>
+      <nav class="nav">
         <a href="catalog.html">Catálogo</a>
         <a href="about.html">Envíos & Garantía</a>
         <a href="#" id="cart-btn">Carrito (<span id="cart-count">0</span>)</a>
@@ -22,59 +22,16 @@
     </div>
   </header>
 
-  <!-- HERO SLIDER -->
+  <!-- HERO SLIDER (SOLO ESTO EN EL INDEX) -->
   <section id="hero-slider" class="hero-slider">
     <div class="slides"></div>
 
-    <button class="nav prev" type="button" aria-label="Anterior">‹</button>
-    <button class="nav next" type="button" aria-label="Siguiente">›</button>
+    <button class="nav-btn prev" type="button" aria-label="Anterior">‹</button>
+    <button class="nav-btn next" type="button" aria-label="Siguiente">›</button>
 
     <div class="dots"></div>
   </section>
 
-  <!-- BARRA DE CONFIANZA -->
-  <section class="trustbar">
-    <div class="container trustgrid">
-      <div class="trustitem">
-        <div class="trusttitle">100% Original</div>
-        <div class="trusttext">Proveedores verificados</div>
-      </div>
-      <div class="trustitem">
-        <div class="trusttitle">Envíos Bolivia</div>
-        <div class="trusttext">Coordinación por WhatsApp</div>
-      </div>
-      <div class="trustitem">
-        <div class="trusttitle">Atención rápida</div>
-        <div class="trusttext">2 números disponibles</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CATEGORÍAS -->
-  <section class="container section">
-    <h2>Comprar por categoría</h2>
-
-    <div class="catgrid">
-      <a class="catcard" href="catalog.html">Creatinas</a>
-      <a class="catcard" href="catalog.html">Proteínas</a>
-      <a class="catcard" href="catalog.html">Pre-entrenos</a>
-      <a class="catcard" href="catalog.html">Vitaminas</a>
-      <a class="catcard" href="catalog.html">Combos</a>
-      <a class="catcard" href="catalog.html">Ofertas</a>
-    </div>
-  </section>
-
-  <!-- DESTACADOS -->
-  <section class="container section">
-    <h2>Productos destacados</h2>
-    <div id="featured-products" class="grid"></div>
-  </section>
-
-  <footer class="footer">
-    <p>© 2026 PRIME Suplementos – Todos los derechos reservados</p>
-  </footer>
-
-  <script src="assets/js/app.js"></script>
   <script src="assets/js/cart.js"></script>
   <script src="assets/js/slider.js"></script>
 </body>

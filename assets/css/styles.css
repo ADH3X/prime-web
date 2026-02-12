@@ -338,3 +338,115 @@ input[type="text"]::placeholder {
   .hero-slider h1 { font-size: 28px; }
   .hero-slider p { font-size: 14px; }
 }
+/* ===== INDEX LIMPIO (HEADER + SLIDER) ===== */
+.brand { display: flex; align-items: center; gap: 10px; }
+
+/* Nav más limpio */
+.nav a {
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+/* Slider full-width pro */
+.hero-slider {
+  position: relative;
+  height: 520px;
+  overflow: hidden;
+  background: #000;
+}
+
+.hero-slider .slides { position: relative; height: 100%; }
+
+.hero-slider .slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity .45s ease;
+}
+
+.hero-slider .slide.active { opacity: 1; }
+
+.hero-slider .slide .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,.80), rgba(0,0,0,.25));
+}
+
+.hero-slider .slide-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  max-width: 760px;
+  padding: 0 6px;
+}
+
+.hero-slider h1 { font-size: 44px; line-height: 1.05; }
+.hero-slider p  { color: var(--muted); font-size: 16px; max-width: 560px; }
+
+/* Botón CTA en el slider: NO ancho completo en PC */
+.hero-slider .btn-primary {
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 10px;
+}
+
+/* Flechas */
+.hero-slider .nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.45);
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 5;
+}
+.hero-slider .prev { left: 14px; }
+.hero-slider .next { right: 14px; }
+
+/* Dots */
+.hero-slider .dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+.hero-slider .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(255,255,255,.12);
+  cursor: pointer;
+}
+.hero-slider .dot.active {
+  background: var(--gold);
+  border-color: rgba(212,175,55,.8);
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+  .hero-slider { height: 420px; }
+  .hero-slider h1 { font-size: 28px; }
+  .hero-slider p { font-size: 14px; }
+
+  /* En móvil sí puede ser ancho completo */
+  .hero-slider .btn-primary {
+    width: 100%;
+  }
+}
