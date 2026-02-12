@@ -4,8 +4,8 @@
   if (!slider) return;
 
   const slidesWrap = slider.querySelector(".slides");
-  if (!slidesWrap) return;
 
+  // Fallback si offers.json no carga
   const FALLBACK = [
     {
       image: "assets/img/banners/hero1.jpg",
@@ -15,10 +15,7 @@
     }
   ];
 
-  const AUTOPLAY_MS = 6000;
-  let offers = [];
-  let index = 0;
-  let timer = null;
+  const AUTOPLAY_MS = 6500;
 
   function buildWaLink(number, message) {
     const clean = String(number || "").replace(/[^\d]/g, "");
@@ -26,151 +23,105 @@
     return `https://wa.me/${clean}?text=${text}`;
   }
 
-  function setActive(i) {
-    index = (i + offers.length) % offers.length;
+  function createSlide(offer, isActive) {
+    const a = document.createElement("a");
+    a.className = `slide${isActive ? " active" : ""}`;
+    a.href = buildWaLink(offer.waNumber, offer.waMessage);
+    a.target = "_blank";
+    a.rel = "noopener";
 
-    const slides = slidesWrap.querySelectorAll(".slide");
-    const dots = slider.querySelectorAll(".dot");
+    a.style.backgroundImage = `url('${offer.image}')`;
 
-    slides.forEach((s, idx) => s.classList.toggle("active", idx === index));
-    dots.forEach((d, idx) => d.classList.toggle("active", idx === index));
+    const overlay = document.createElement("div");
+    overlay.className = "slide-overlay";
+    a.appendChild(overlay);
+
+    return a;
   }
 
-  function next() {
-    setActive(index + 1);
+  function createArrow(className, label, text) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = `nav-btn ${className}`;
+    btn.setAttribute("aria-label", label);
+    btn.textContent = text;
+    return btn;
   }
 
-  function prev() {
-    setActive(index - 1);
+  function setActive(index, slides) {
+    slides.forEach((s, i) => s.classList.toggle("active", i === index));
   }
 
-  function stopAutoplay() {
-    if (timer) clearInterval(timer);
-    timer = null;
-  }
+  async function init() {
+    let offers = FALLBACK;
 
-  function startAutoplay() {
-    stopAutoplay();
-    if (offers.length <= 1) return;
-    timer = setInterval(next, AUTOPLAY_MS);
-  }
-
-  function renderUI() {
-    // Limpia TODO
-    slidesWrap.innerHTML = "";
-    slider.querySelectorAll(".nav-btn, .dots").forEach((el) => el.remove());
-
-    // Slides
-    offers.forEach((offer) => {
-      const a = document.createElement("a");
-      a.className = "slide";
-      a.href = buildWaLink(offer.waNumber, offer.waMessage);
-      a.target = "_blank";
-      a.rel = "noopener";
-
-      // cache-bust para GitHub Pages (a veces no refresca rápido)
-      const img = `${offer.image}?v=${Date.now()}`;
-      a.style.backgroundImage = `url("${img}")`;
-
-      const overlay = document.createElement("div");
-      overlay.className = "slide-overlay";
-      a.appendChild(overlay);
-
-      slidesWrap.appendChild(a);
-    });
-
-    // Si solo hay 1, no ponemos controles
-    if (offers.length <= 1) {
-      slidesWrap.querySelector(".slide")?.classList.add("active");
-      return;
+    try {
+      const res = await fetch("data/offers.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("offers.json no encontrado");
+      const data = await res.json();
+      if (Array.isArray(data) && data.length) offers = data;
+    } catch (e) {
+      // se queda con FALLBACK
     }
 
+    // Render
+    slidesWrap.innerHTML = "";
+    const slides = offers.map((o, i) => createSlide(o, i === 0));
+    slides.forEach(s => slidesWrap.appendChild(s));
+
+    // Si hay 1 sola oferta: sin flechas, sin autoplay
+    if (offers.length <= 1) return;
+
     // Flechas
-    const btnPrev = document.createElement("button");
-    btnPrev.className = "nav-btn prev";
-    btnPrev.type = "button";
-    btnPrev.setAttribute("aria-label", "Anterior");
-    btnPrev.innerHTML = "‹";
-    btnPrev.addEventListener("click", () => {
-      prev();
-      startAutoplay();
-    });
+    const prevBtn = createArrow("prev", "Anterior", "‹");
+    const nextBtn = createArrow("next", "Siguiente", "›");
+    slidesWrap.appendChild(prevBtn);
+    slidesWrap.appendChild(nextBtn);
 
-    const btnNext = document.createElement("button");
-    btnNext.className = "nav-btn next";
-    btnNext.type = "button";
-    btnNext.setAttribute("aria-label", "Siguiente");
-    btnNext.innerHTML = "›";
-    btnNext.addEventListener("click", () => {
-      next();
-      startAutoplay();
-    });
+    let current = 0;
+    let timer = null;
 
-    slider.appendChild(btnPrev);
-    slider.appendChild(btnNext);
+    const go = (dir) => {
+      current = (current + dir + offers.length) % offers.length;
+      setActive(current, slides);
+    };
 
-    // Dots
-    const dots = document.createElement("div");
-    dots.className = "dots";
+    const start = () => {
+      stop();
+      timer = setInterval(() => go(1), AUTOPLAY_MS);
+    };
 
-    offers.forEach((_, i) => {
-      const dot = document.createElement("button");
-      dot.className = "dot";
-      dot.type = "button";
-      dot.setAttribute("aria-label", `Ir a oferta ${i + 1}`);
-      dot.addEventListener("click", () => {
-        setActive(i);
-        startAutoplay();
-      });
-      dots.appendChild(dot);
-    });
+    const stop = () => {
+      if (timer) clearInterval(timer);
+      timer = null;
+    };
 
-    slider.appendChild(dots);
+    prevBtn.addEventListener("click", () => { go(-1); start(); });
+    nextBtn.addEventListener("click", () => { go(1); start(); });
 
-    // Activa el primero
-    setActive(0);
+    // Pausa si el mouse entra
+    slider.addEventListener("mouseenter", stop);
+    slider.addEventListener("mouseleave", start);
 
-    // Autoplay + pausa al hover
-    slider.addEventListener("mouseenter", stopAutoplay);
-    slider.addEventListener("mouseleave", startAutoplay);
-
-    // Swipe en móvil (simple)
+    // Swipe móvil
     let x0 = null;
     slider.addEventListener("touchstart", (e) => {
       x0 = e.touches?.[0]?.clientX ?? null;
     }, { passive: true });
 
     slider.addEventListener("touchend", (e) => {
-      if (x0 === null) return;
-      const x1 = e.changedTouches?.[0]?.clientX ?? null;
-      if (x1 === null) return;
-
+      if (x0 == null) return;
+      const x1 = e.changedTouches?.[0]?.clientX ?? x0;
       const dx = x1 - x0;
-      if (Math.abs(dx) > 40) {
-        dx < 0 ? next() : prev();
-        startAutoplay();
-      }
       x0 = null;
+
+      if (Math.abs(dx) < 40) return;
+      go(dx > 0 ? -1 : 1);
+      start();
     }, { passive: true });
 
-    startAutoplay();
+    start();
   }
 
-  async function loadOffers() {
-    try {
-      const res = await fetch(`data/offers.json?v=${Date.now()}`, { cache: "no-store" });
-      if (!res.ok) throw new Error("offers.json no encontrado");
-      const data = await res.json();
-      if (!Array.isArray(data) || data.length === 0) throw new Error("offers.json vacío");
-      return data;
-    } catch (e) {
-      console.warn("[SLIDER] Usando FALLBACK:", e?.message || e);
-      return FALLBACK;
-    }
-  }
-
-  (async function init() {
-    offers = await loadOffers();
-    renderUI();
-  })();
+  init();
 })();

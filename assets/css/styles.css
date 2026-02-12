@@ -213,33 +213,38 @@ body{
     border-radius:14px;
   }
 }
-/* =========================
-   INDEX SECTIONS (extra)
-========================= */
-.section{
-  padding: 44px 0;
-}
 
+/* ====== OCULTAR DOTS (solo flechas) ====== */
+.hero-slider .dots,
+.hero-slider .dot{
+  display:none !important;
+}
+/* =========================
+   INDEX (landing) - limpio
+========================= */
+.section { padding: 44px 0; }
 .section-alt{
   background: rgba(255,255,255,0.03);
   border-top: 1px solid rgba(255,255,255,0.06);
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-.section-head{
-  margin-bottom: 18px;
-}
-
-.section-head h2{
-  font-size: 28px;
-  line-height: 1.15;
-}
-
+.section-head { margin-bottom: 18px; }
+.section-head h2 { font-size: 28px; line-height: 1.15; }
 .section-head p{
   margin-top: 8px;
   color: rgba(245,245,245,0.75);
-  max-width: 720px;
+  max-width: 780px;
 }
+
+.hero-title { font-size: 34px; line-height: 1.1; }
+.hero-subtitle{
+  margin-top: 10px;
+  color: rgba(245,245,245,0.75);
+  max-width: 760px;
+}
+
+.btn-inline{ display: inline-flex; align-items: center; justify-content: center; }
 
 /* Features */
 .features-grid{
@@ -247,19 +252,13 @@ body{
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
 }
-
 .feature-card{
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 14px;
   padding: 16px;
 }
-
-.feature-card h3{
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-
+.feature-card h3{ font-size: 16px; margin-bottom: 8px; }
 .feature-card p{
   color: rgba(245,245,245,0.75);
   font-size: 14px;
@@ -272,7 +271,6 @@ body{
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
 }
-
 .cat-card{
   text-decoration: none;
   background: #111;
@@ -283,22 +281,12 @@ body{
   gap: 6px;
   transition: transform .12s ease, border-color .12s ease;
 }
-
 .cat-card:hover{
   transform: translateY(-2px);
   border-color: rgba(212,175,55,0.35);
 }
-
-.cat-title{
-  color: var(--text);
-  font-weight: 900;
-  font-size: 16px;
-}
-
-.cat-sub{
-  color: rgba(245,245,245,0.70);
-  font-size: 13px;
-}
+.cat-title{ color: var(--text); font-weight: 900; font-size: 16px; }
+.cat-sub{ color: rgba(245,245,245,0.70); font-size: 13px; }
 
 .center-actions{
   margin-top: 16px;
@@ -312,14 +300,12 @@ body{
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
 }
-
 .step-card{
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 14px;
   padding: 16px;
 }
-
 .step-num{
   width: 34px;
   height: 34px;
@@ -331,43 +317,27 @@ body{
   background: var(--gold);
   margin-bottom: 10px;
 }
-
-.step-card h3{
-  font-size: 16px;
-  margin-bottom: 6px;
-}
-
+.step-card h3{ font-size: 16px; margin-bottom: 6px; }
 .step-card p{
   color: rgba(245,245,245,0.75);
   font-size: 14px;
   line-height: 1.45;
 }
 
-/* CTA */
-.section-cta{
-  padding: 26px 0 50px;
-}
-
-.cta-box{
+/* CTA row */
+.cta-row{
+  margin-top: 18px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  justify-content: space-between;
+  gap: 14px;
   background: linear-gradient(135deg, rgba(212,175,55,0.14), rgba(255,255,255,0.03));
   border: 1px solid rgba(212,175,55,0.20);
   border-radius: 18px;
-  padding: 20px;
+  padding: 18px;
 }
-
-.cta-box h2{
-  font-size: 22px;
-  line-height: 1.15;
-}
-
-.cta-box p{
-  margin-top: 8px;
-  color: rgba(245,245,245,0.75);
-}
+.cta-mini h3{ font-size: 18px; line-height: 1.15; }
+.cta-mini p{ margin-top: 6px; color: rgba(245,245,245,0.75); }
 
 /* About */
 .about-grid{
@@ -375,26 +345,23 @@ body{
   grid-template-columns: 1.2fr 0.8fr;
   gap: 14px;
 }
-
 .about-card{
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px;
   padding: 18px;
 }
-
+.about-card h3{ font-size: 16px; }
 .about-card p{
   color: rgba(245,245,245,0.78);
   line-height: 1.55;
   margin-top: 10px;
   font-size: 14px;
 }
-
 .about-highlight{
   border-color: rgba(212,175,55,0.22);
   background: rgba(212,175,55,0.06);
 }
-
 .about-list{
   margin-top: 12px;
   padding-left: 16px;
@@ -402,17 +369,19 @@ body{
   line-height: 1.6;
   font-size: 14px;
 }
+.about-note{ margin-top: 10px; }
 
 /* Responsive */
 @media (max-width: 900px){
-  .cat-grid{ grid-template-columns: repeat(2, 1fr); }
   .features-grid{ grid-template-columns: 1fr; }
+  .cat-grid{ grid-template-columns: repeat(2, 1fr); }
   .steps-grid{ grid-template-columns: 1fr; }
   .about-grid{ grid-template-columns: 1fr; }
-  .cta-box{ flex-direction: column; align-items: stretch; }
+  .cta-row{ flex-direction: column; align-items: stretch; }
 }
 
 @media (max-width: 520px){
   .section{ padding: 34px 0; }
+  .hero-title{ font-size: 26px; }
   .section-head h2{ font-size: 22px; }
 }
