@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo – PRIME</title>
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <img src="assets/img/logo.png" alt="PRIME" class="logo"/>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="catalog.html">Catálogo</a>
+        <a href="#" id="cart-btn">Carrito (<span id="cart-count">0</span>)</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="container">
+    <h1>Catálogo</h1>
+
+    <input type="text" id="search" placeholder="Buscar producto..." />
+
+    <div id="products" class="grid"></div>
+
+    <!-- FINALIZAR COMPRA (2 números de WhatsApp) -->
+    <div class="checkout-box">
+      <h3>Finalizar compra</h3>
+      <p>Elegí por dónde querés hacer tu pedido:</p>
+
+      <div class="wa-buttons">
+        <button class="btn-primary" onclick="checkoutWhatsApp1()">
+          Comprar por WhatsApp (77676446)
+        </button>
+
+        <button class="btn-primary" onclick="checkoutWhatsApp2()">
+          Comprar por WhatsApp (69259870)
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 PRIME Suplementos</p>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/cart.js"></script>
+</body>
+</html>

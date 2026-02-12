@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "nombre": "Creatina Monohidratada 300g",
+    "marca": "Dragon Pharma",
+    "precio": 340,
+    "imagen": "assets/img/products/creatina-dragon.jpg",
+    "categoria": "Creatinas"
+  },
+  {
+    "id": 2,
+    "nombre": "Creatina Monohidratada 300g",
+    "marca": "Integral Médica",
+    "precio": 240,
+    "imagen": "assets/img/products/creatina-integral.jpg",
+    "categoria": "Creatinas"
+  }
+]

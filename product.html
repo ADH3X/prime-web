@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Producto – PRIME</title>
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <img src="assets/img/logo.png" alt="PRIME" class="logo"/>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="catalog.html">Catálogo</a>
+        <a href="about.html">Envíos & Garantía</a>
+        <a href="#" id="cart-btn">Carrito (<span id="cart-count">0</span>)</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="container product-detail">
+    <div class="product-detail-grid">
+      <div>
+        <img id="product-image" src="assets/img/products/creatina-dragon.jpg" alt="Producto" style="width:100%; border-radius:10px;">
+      </div>
+
+      <div>
+        <h1 id="product-name">Creatina Monohidratada 300g</h1>
+        <p id="product-brand">Dragon Pharma</p>
+        <p class="price" id="product-price">Bs 340</p>
+
+        <p id="product-description">
+          Creatina monohidratada ideal para aumentar fuerza, rendimiento y volumen muscular.
+        </p>
+
+        <button class="btn-primary" onclick="addToCart({
+          id: 1,
+          nombre: 'Creatina Monohidratada 300g',
+          marca: 'Dragon Pharma',
+          precio: 340,
+          imagen: 'assets/img/products/creatina-dragon.jpg'
+        })">
+          Agregar al carrito
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 PRIME Suplementos</p>
+  </footer>
+
+  <script src="assets/js/cart.js"></script>
+</body>
+</html>
