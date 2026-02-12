@@ -8,24 +8,27 @@
 </head>
 <body>
 
+  <!-- HEADER -->
   <header class="header">
     <div class="container header-inner">
-      <!-- El logo es el botón de inicio -->
+
+      <!-- LOGO = INICIO -->
       <a href="index.html" class="brand" aria-label="Ir al inicio">
         <img src="assets/img/logo.png" alt="PRIME" class="logo"/>
       </a>
 
-      <nav class="nav">
-        <!-- Quitado "Inicio" -->
+      <nav aria-label="Navegación principal">
+        <!-- NO PONEMOS 'Inicio' -->
         <a href="catalog.html">Catálogo</a>
-        <a href="about.html">Envíos & Garantía</a>
+        <a href="about.html">Envíos &amp; Garantía</a>
         <a href="#" id="cart-btn">Carrito (<span id="cart-count">0</span>)</a>
       </nav>
+
     </div>
   </header>
 
-  <!-- SOLO SLIDER -->
-  <section id="hero-slider" class="hero-slider" aria-label="Ofertas del momento">
+  <!-- HERO SLIDER (ÚNICO CONTENIDO DEL INDEX POR AHORA) -->
+  <section id="hero-slider" class="hero-slider" aria-label="Ofertas y anuncios">
     <div class="slides"></div>
 
     <button class="nav prev" aria-label="Anterior">‹</button>
@@ -34,6 +37,8 @@
     <div class="dots" aria-label="Indicadores"></div>
   </section>
 
+  <!-- SCRIPTS -->
+  <script src="assets/js/app.js"></script>
   <script src="assets/js/cart.js"></script>
   <script src="assets/js/slider.js"></script>
 </body>
