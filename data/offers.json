@@ -1,11 +1,7 @@
 [
   {
-    "title": "OFERTA DEL MOMENTO",
-    "headline": "Proteína + Creatina Dragon Pharma",
-    "subtitle": "Pack explosivo para subir masa y rendimiento",
-    "badge": "¡SOLO 800 Bs!",
     "ctaText": "Comprar por WhatsApp",
-    "ctaLink": "catalog.html",
-    "image": "assets/img/banners/hero1.jpg"
+    "image": "assets/img/banners/hero1.jpg",
+    "waMessage": "Hola PRIME, me interesa el combo Proteína + Creatina Dragon Pharma + Shaker que vi en su web. ¿Sigue disponible? Precio: 800bs"
   }
 ]
