@@ -15,9 +15,9 @@
     }
   ];
 
-  const AUTOPLAY_MS = 4500;
+  const AUTOPLAY_MS = 6000;
   let offers = [];
-  let current = 0;
+  let index = 0;
   let timer = null;
 
   function buildWaLink(number, message) {
@@ -26,76 +26,22 @@
     return `https://wa.me/${clean}?text=${text}`;
   }
 
-  function clearUIExtras() {
-    slider.querySelectorAll(".nav, .dots").forEach((el) => el.remove());
+  function setActive(i) {
+    index = (i + offers.length) % offers.length;
+
+    const slides = slidesWrap.querySelectorAll(".slide");
+    const dots = slider.querySelectorAll(".dot");
+
+    slides.forEach((s, idx) => s.classList.toggle("active", idx === index));
+    dots.forEach((d, idx) => d.classList.toggle("active", idx === index));
   }
 
-  function render() {
-    slidesWrap.innerHTML = "";
-    clearUIExtras();
-
-    // slides
-    offers.forEach((o, idx) => {
-      const a = document.createElement("a");
-      a.className = "slide" + (idx === current ? " active" : "");
-      a.href = buildWaLink(o.waNumber, o.waMessage);
-      a.target = "_blank";
-      a.rel = "noopener";
-      a.style.backgroundImage = `url("${o.image}")`;
-
-      const overlay = document.createElement("div");
-      overlay.className = "hero-overlay";
-      a.appendChild(overlay);
-
-      slidesWrap.appendChild(a);
-    });
-
-    // Si hay 1: no flechas/dots/autoplay
-    if (offers.length <= 1) return;
-
-    // Flechas
-    const prev = document.createElement("button");
-    prev.className = "nav prev";
-    prev.type = "button";
-    prev.innerHTML = "‹";
-    prev.addEventListener("click", () => goTo(current - 1, true));
-
-    const next = document.createElement("button");
-    next.className = "nav next";
-    next.type = "button";
-    next.innerHTML = "›";
-    next.addEventListener("click", () => goTo(current + 1, true));
-
-    slider.appendChild(prev);
-    slider.appendChild(next);
-
-    // Dots
-    const dots = document.createElement("div");
-    dots.className = "dots";
-
-    offers.forEach((_, idx) => {
-      const d = document.createElement("button");
-      d.className = "dot" + (idx === current ? " active" : "");
-      d.type = "button";
-      d.addEventListener("click", () => goTo(idx, true));
-      dots.appendChild(d);
-    });
-
-    slider.appendChild(dots);
+  function next() {
+    setActive(index + 1);
   }
 
-  function goTo(index, userAction = false) {
-    if (!offers.length) return;
-
-    current = (index + offers.length) % offers.length;
-    render();
-
-    if (userAction) restartAutoplay();
-  }
-
-  function startAutoplay() {
-    if (offers.length <= 1) return;
-    timer = setInterval(() => goTo(current + 1, false), AUTOPLAY_MS);
+  function prev() {
+    setActive(index - 1);
   }
 
   function stopAutoplay() {
@@ -103,28 +49,128 @@
     timer = null;
   }
 
-  function restartAutoplay() {
+  function startAutoplay() {
     stopAutoplay();
-    startAutoplay();
+    if (offers.length <= 1) return;
+    timer = setInterval(next, AUTOPLAY_MS);
   }
 
-  async function init() {
-    offers = FALLBACK;
+  function renderUI() {
+    // Limpia TODO
+    slidesWrap.innerHTML = "";
+    slider.querySelectorAll(".nav-btn, .dots").forEach((el) => el.remove());
 
-    try {
-      const res = await fetch("data/offers.json", { cache: "no-store" });
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data) && data.length) offers = data;
-      }
-    } catch (e) {
-      console.warn("[SLIDER] offers.json no carga, usando FALLBACK", e);
+    // Slides
+    offers.forEach((offer) => {
+      const a = document.createElement("a");
+      a.className = "slide";
+      a.href = buildWaLink(offer.waNumber, offer.waMessage);
+      a.target = "_blank";
+      a.rel = "noopener";
+
+      // cache-bust para GitHub Pages (a veces no refresca rápido)
+      const img = `${offer.image}?v=${Date.now()}`;
+      a.style.backgroundImage = `url("${img}")`;
+
+      const overlay = document.createElement("div");
+      overlay.className = "slide-overlay";
+      a.appendChild(overlay);
+
+      slidesWrap.appendChild(a);
+    });
+
+    // Si solo hay 1, no ponemos controles
+    if (offers.length <= 1) {
+      slidesWrap.querySelector(".slide")?.classList.add("active");
+      return;
     }
 
-    current = 0;
-    render();
+    // Flechas
+    const btnPrev = document.createElement("button");
+    btnPrev.className = "nav-btn prev";
+    btnPrev.type = "button";
+    btnPrev.setAttribute("aria-label", "Anterior");
+    btnPrev.innerHTML = "‹";
+    btnPrev.addEventListener("click", () => {
+      prev();
+      startAutoplay();
+    });
+
+    const btnNext = document.createElement("button");
+    btnNext.className = "nav-btn next";
+    btnNext.type = "button";
+    btnNext.setAttribute("aria-label", "Siguiente");
+    btnNext.innerHTML = "›";
+    btnNext.addEventListener("click", () => {
+      next();
+      startAutoplay();
+    });
+
+    slider.appendChild(btnPrev);
+    slider.appendChild(btnNext);
+
+    // Dots
+    const dots = document.createElement("div");
+    dots.className = "dots";
+
+    offers.forEach((_, i) => {
+      const dot = document.createElement("button");
+      dot.className = "dot";
+      dot.type = "button";
+      dot.setAttribute("aria-label", `Ir a oferta ${i + 1}`);
+      dot.addEventListener("click", () => {
+        setActive(i);
+        startAutoplay();
+      });
+      dots.appendChild(dot);
+    });
+
+    slider.appendChild(dots);
+
+    // Activa el primero
+    setActive(0);
+
+    // Autoplay + pausa al hover
+    slider.addEventListener("mouseenter", stopAutoplay);
+    slider.addEventListener("mouseleave", startAutoplay);
+
+    // Swipe en móvil (simple)
+    let x0 = null;
+    slider.addEventListener("touchstart", (e) => {
+      x0 = e.touches?.[0]?.clientX ?? null;
+    }, { passive: true });
+
+    slider.addEventListener("touchend", (e) => {
+      if (x0 === null) return;
+      const x1 = e.changedTouches?.[0]?.clientX ?? null;
+      if (x1 === null) return;
+
+      const dx = x1 - x0;
+      if (Math.abs(dx) > 40) {
+        dx < 0 ? next() : prev();
+        startAutoplay();
+      }
+      x0 = null;
+    }, { passive: true });
+
     startAutoplay();
   }
 
-  init();
+  async function loadOffers() {
+    try {
+      const res = await fetch(`data/offers.json?v=${Date.now()}`, { cache: "no-store" });
+      if (!res.ok) throw new Error("offers.json no encontrado");
+      const data = await res.json();
+      if (!Array.isArray(data) || data.length === 0) throw new Error("offers.json vacío");
+      return data;
+    } catch (e) {
+      console.warn("[SLIDER] Usando FALLBACK:", e?.message || e);
+      return FALLBACK;
+    }
+  }
+
+  (async function init() {
+    offers = await loadOffers();
+    renderUI();
+  })();
 })();
