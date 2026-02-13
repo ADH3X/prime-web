@@ -471,3 +471,35 @@ body{
     align-items: stretch;
   }
 }
+/* ===== Copy más premium (menos “texto plano”) ===== */
+.section-head h2{
+  font-size: clamp(26px, 3vw, 34px);
+  letter-spacing: -0.03em;
+}
+
+.section-head p{
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 780px;
+  color: rgba(245,245,245,0.72);
+}
+
+.feature-card h3,
+.step-card h3,
+.about-card h3{
+  letter-spacing: -0.01em;
+}
+
+.feature-card p,
+.step-card p,
+.about-card p{
+  line-height: 1.6;
+}
+
+.section{
+  padding: 54px 0;
+}
+
+.section-alt{
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+}
