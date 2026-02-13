@@ -385,3 +385,89 @@ body{
   .hero-title{ font-size: 26px; }
   .section-head h2{ font-size: 22px; }
 }
+
+/* =========================
+   Ajustes finos de estética (Index)
+   Pegalo al FINAL del styles.css
+========================= */
+
+/* Ocultar dots del slider por completo (por si quedaron en tu CSS viejo) */
+.hero-slider .dots { display: none !important; }
+.hero-slider .dot { display: none !important; }
+
+/* Titulares más “premium” */
+.section-head h2{
+  letter-spacing: -0.02em;
+}
+
+/* Cards con un poco más de “marca” */
+.feature-card,
+.step-card,
+.about-card{
+  backdrop-filter: blur(6px);
+}
+
+/* Categorías: que parezcan botones/tiles premium */
+.cat-card{
+  position: relative;
+  overflow: hidden;
+}
+.cat-card::after{
+  content:"";
+  position:absolute;
+  inset:-40px -80px auto auto;
+  width:180px;
+  height:180px;
+  background: radial-gradient(circle, rgba(212,175,55,0.14), transparent 55%);
+  transform: rotate(20deg);
+}
+
+/* Botón principal: que no se vea “default” */
+.btn-primary{
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+}
+.btn-primary:active{
+  transform: translateY(1px);
+}
+
+/* CTA ayuda */
+.help-cta{
+  margin-top: 16px;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, rgba(212,175,55,0.10), rgba(255,255,255,0.03));
+  border: 1px solid rgba(212,175,55,0.18);
+  border-radius: 18px;
+  padding: 18px;
+}
+.help-cta h3{
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+.help-cta p{
+  color: rgba(245,245,245,0.75);
+}
+
+/* Números del “Cómo comprar” menos chillones y más elegantes */
+.step-num{
+  background: rgba(212,175,55,0.16) !important;
+  color: var(--gold) !important;
+  border: 1px solid rgba(212,175,55,0.35);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.35);
+}
+
+/* Footer más discreto */
+.footer{
+  padding: 18px 0 10px;
+  color: rgba(245,245,245,0.55);
+}
+
+/* Responsive CTA */
+@media (max-width: 900px){
+  .help-cta{
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
