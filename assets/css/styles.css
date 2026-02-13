@@ -39,6 +39,13 @@ body{
   background: rgba(0,0,0,0.72);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
+
+  transition: transform .22s ease, background .22s ease, border-color .22s ease;
+  will-change: transform;
+}
+
+.header.header-hidden{
+  transform: translateY(-110%);
 }
 
 .header-inner{
@@ -55,10 +62,11 @@ body{
   gap:10px;
   text-decoration:none;
   min-width:220px;
+  cursor: pointer;
 }
 
 .logo{
-  height:40px;
+  height:46px; /* más grande para que se note el “inicio” */
   width:auto;
   display:block;
 }
@@ -491,99 +499,8 @@ body{
 }
 
 /* =========================
-   RESPONSIVE
+   CATALOGO (componentes)
 ========================= */
-@media (max-width: 900px){
-  /* header: no 2 filas, scroll horizontal */
-  .header-inner{
-    flex-wrap:wrap;
-    justify-content:center;
-  }
-
-  .brand{
-    min-width:unset;
-    justify-content:center;
-  }
-
-  .nav{
-    width:100%;
-    justify-content:flex-start;
-    overflow-x:auto;
-    padding:6px 2px;
-    gap:8px;
-    -webkit-overflow-scrolling:touch;
-  }
-
-  .nav::-webkit-scrollbar{ height:0px; }
-
-  /* layout */
-  .features-grid{ grid-template-columns:1fr; }
-  .cat-grid{ grid-template-columns:repeat(2, 1fr); }
-  .steps-grid{ grid-template-columns:1fr; }
-  .about-grid{ grid-template-columns:1fr; }
-
-  .help-cta{
-    flex-direction:column;
-    align-items:stretch;
-  }
-}
-
-@media (max-width:768px){
-  .logo{ height:34px; }
-
-  .hero-slider .slides{
-    width:94%;
-    height:clamp(260px, 55vw, 420px);
-  }
-
-  .hero-slider .prev{ left:10px; }
-  .hero-slider .next{ right:10px; }
-}
-
-@media (max-width:520px){
-  .logo{ height:34px; }
-  .brand-name{ font-size:13px; }
-  .brand-tag{ font-size:11px; }
-
-  .hero-slider{ padding:12px 0; }
-  .hero-slider .slides{
-    width:94%;
-    height:320px;
-    border-radius:14px;
-  }
-
-  .section{ padding:42px 0; }
-}
-
-/* =========================
-   HEADER: hide on scroll down / show on scroll up
-========================= */
-.header{
-  transition: transform .22s ease, background .22s ease, border-color .22s ease;
-  will-change: transform;
-}
-
-.header.header-hidden{
-  transform: translateY(-110%);
-}
-
-/* Logo más grande y más "botón" */
-.brand{
-  cursor: pointer;
-}
-
-.logo{
-  height: 46px; /* antes 40 */
-}
-
-@media (max-width:520px){
-  .logo{
-    height: 44px;
-  }
-}
-
-
-/* ===== Catalog toolbar (compra rápida) ===== */
 .catalog-toolbar{
   display:flex;
   gap:10px;
@@ -624,7 +541,6 @@ body{
   outline: none;
 }
 
-/* ===== Anchors ===== */
 .catalog-anchors{
   display:flex;
   gap:10px;
@@ -632,17 +548,13 @@ body{
   margin: 10px 0 16px;
 }
 
-/* ===== Featured grid (opcional) ===== */
 .featured-grid{
   display:grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
 }
-@media (max-width: 900px){
-  .featured-grid{ grid-template-columns: 1fr; }
-}
 
-/* ===== Sticky checkout ===== */
+/* Sticky checkout (mobile) */
 .sticky-checkout{
   position: fixed;
   left: 14px;
@@ -672,4 +584,71 @@ body{
   color: rgba(245,245,245,0.70);
   font-size: 13px;
   margin-top: 2px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px){
+  /* header: no 2 filas, scroll horizontal */
+  .header-inner{
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  .brand{
+    min-width:unset;
+    justify-content:center;
+  }
+
+  .nav{
+    width:100%;
+    justify-content:flex-start;
+    overflow-x:auto;
+    padding:6px 2px;
+    gap:8px;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .nav::-webkit-scrollbar{ height:0px; }
+
+  /* layout */
+  .features-grid{ grid-template-columns:1fr; }
+  .cat-grid{ grid-template-columns:repeat(2, 1fr); }
+  .steps-grid{ grid-template-columns:1fr; }
+  .about-grid{ grid-template-columns:1fr; }
+
+  .help-cta{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .featured-grid{ grid-template-columns: 1fr; }
+}
+
+@media (max-width:768px){
+  .logo{ height:44px; }
+
+  .hero-slider .slides{
+    width:94%;
+    height:clamp(260px, 55vw, 420px);
+  }
+
+  .hero-slider .prev{ left:10px; }
+  .hero-slider .next{ right:10px; }
+}
+
+@media (max-width:520px){
+  .logo{ height:44px; }
+  .brand-name{ font-size:13px; }
+  .brand-tag{ font-size:11px; }
+
+  .hero-slider{ padding:12px 0; }
+  .hero-slider .slides{
+    width:94%;
+    height:320px;
+    border-radius:14px;
+  }
+
+  .section{ padding:42px 0; }
 }
