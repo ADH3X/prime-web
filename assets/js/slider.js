@@ -11,7 +11,7 @@
       image: "assets/img/banners/hero1.jpg",
       waNumber: "59169259870",
       waMessage:
-        "Hola PRIME, me interesa el combo Proteína + Creatina Dragon Pharma + Shaker que vi en su web. ¿Sigue disponible?"
+        "Hola PRIME Suplementos, me interesa el combo Proteína + Creatina Dragon Pharma + Shaker que vi en su web. ¿Sigue disponible?"
     }
   ];
 
@@ -34,8 +34,11 @@
       a.href = buildWaLink(offer.waNumber, offer.waMessage);
       a.target = "_blank";
       a.rel = "noopener";
-
       a.style.backgroundImage = `url('${offer.image}')`;
+
+      // CLAVE: solo la activa debe poder clickease
+      a.style.pointerEvents = i === index ? "auto" : "none";
+      a.style.zIndex = i === index ? "2" : "1";
 
       const overlay = document.createElement("div");
       overlay.className = "slide-overlay";
@@ -47,14 +50,20 @@
 
   function setActive(nextIndex) {
     index = (nextIndex + offers.length) % offers.length;
+
     const slides = slidesWrap.querySelectorAll(".slide");
-    slides.forEach((s, i) => s.classList.toggle("active", i === index));
+    slides.forEach((s, i) => {
+      const isActive = i === index;
+      s.classList.toggle("active", isActive);
+
+      // CLAVE: evitar que las invisibles capturen el click
+      s.style.pointerEvents = isActive ? "auto" : "none";
+      s.style.zIndex = isActive ? "2" : "1";
+    });
   }
 
   function ensureNav() {
-    // borra nav anterior si existe (por si recarga)
     slider.querySelectorAll(".nav-btn").forEach(b => b.remove());
-
     if (offers.length <= 1) return;
 
     const prev = document.createElement("button");
@@ -113,7 +122,6 @@
     ensureNav();
     startAuto();
 
-    // pausa si el usuario pone el mouse encima
     slider.addEventListener("mouseenter", stopAuto);
     slider.addEventListener("mouseleave", startAuto);
   }

@@ -460,3 +460,8 @@ body{
 
   .section{ padding: 42px 0; }
 }
+
+
+/* FIX: solo la slide activa debe recibir click */
+.hero-slider .slide { pointer-events: none; z-index: 1; }
+.hero-slider .slide.active { pointer-events: auto; z-index: 2; }
