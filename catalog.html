@@ -450,5 +450,39 @@
       if (resetBtn) resetBtn.addEventListener("click", resetFilters);
     })();
   </script>
+  <script>
+  (function () {
+    const header = document.getElementById("site-header") || document.querySelector(".header");
+    if (!header) return;
+
+    let lastY = window.scrollY;
+    const delta = 8;          // sensibilidad (más alto = menos “nervioso”)
+    const minShow = 20;       // cerca del top siempre se muestra
+
+    function onScroll() {
+      const y = window.scrollY;
+
+      // Siempre visible cerca del inicio
+      if (y <= minShow) {
+        header.classList.remove("header-hidden");
+        lastY = y;
+        return;
+      }
+
+      // Si el cambio es mínimo, no hagas nada
+      if (Math.abs(y - lastY) < delta) return;
+
+      // Bajando -> esconder
+      if (y > lastY) header.classList.add("header-hidden");
+      // Subiendo -> mostrar
+      else header.classList.remove("header-hidden");
+
+      lastY = y;
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+  })();
+</script>
+
 </body>
 </html>
