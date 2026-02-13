@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PRIME Bolivia — Suplementos</title>
+  <title>PRIME Bolivia – Suplementos verificados</title>
   <link rel="stylesheet" href="assets/css/styles.css"/>
 </head>
 <body>
 
+  <!-- HEADER -->
   <header class="header">
     <div class="container header-inner">
-      <!-- LOGO = INICIO -->
-      <a href="index.html" class="brand" aria-label="Ir al inicio">
-        <img src="assets/img/logo.png" alt="PRIME" class="logo"/>
+
+      <!-- LOGO / INICIO -->
+      <a class="brand" href="index.html" aria-label="Inicio">
+        <img class="logo" src="assets/img/logo.png" alt="PRIME Bolivia"/>
         <div class="brand-text">
-          <span class="brand-name">PRIME</span>
-          <span class="brand-tag">Suplementos verificados • Bolivia</span>
+          <div class="brand-name">PRIME</div>
+          <div class="brand-tag">Suplementos verificados • Bolivia</div>
         </div>
       </a>
 
-      <nav class="nav" aria-label="Navegación principal">
+      <!-- NAV -->
+      <nav class="nav">
         <a class="nav-link" href="catalog.html">Catálogo</a>
-        <a class="nav-link" href="index.html#ofertas">Ofertas</a>
-        <a class="nav-link" href="index.html#como-comprar">Cómo comprar</a>
-        <a class="nav-link" href="index.html#entrega">Puntos de entrega</a>
-
-        <a class="nav-link nav-cart" href="#" id="cart-btn">
-          Carrito <span class="cart-badge" id="cart-count">0</span>
+        <a class="nav-link nav-highlight" href="#ofertas">Ofertas</a>
+        <a class="nav-link" href="#como-comprar">Cómo comprar</a>
+        <a class="nav-link" href="#puntos">Puntos de entrega</a>
+        <a class="nav-link nav-cart" href="cart.html">
+          Carrito <span class="cart-badge" id="cart-count">2</span>
         </a>
       </nav>
+
     </div>
   </header>
 
@@ -37,7 +40,7 @@
     <div class="slides"></div>
   </section>
 
-  <!-- HERO COPY -->
+  <!-- FEATURES -->
   <section class="section section-tight">
     <div class="container">
       <div class="section-head">
@@ -64,8 +67,8 @@
     </div>
   </section>
 
-  <!-- TOP CATEGORÍAS -->
-  <section class="section section-alt" id="top-categorias">
+  <!-- CATEGORÍAS -->
+  <section id="ofertas" class="section section-alt">
     <div class="container">
       <div class="section-head">
         <h2>Top categorías</h2>
@@ -73,35 +76,32 @@
       </div>
 
       <div class="cat-grid">
-        <a class="cat-card" href="catalog.html?cat=Creatina">
+        <a class="cat-card" href="catalog.html#creatina">
           <div class="cat-title">Creatina</div>
           <div class="cat-sub">Fuerza + rendimiento</div>
         </a>
-
-        <a class="cat-card" href="catalog.html?cat=Proteina">
+        <a class="cat-card" href="catalog.html#proteina">
           <div class="cat-title">Proteína</div>
           <div class="cat-sub">Masa + recuperación</div>
         </a>
-
-        <a class="cat-card" href="catalog.html?cat=Pre-entreno">
+        <a class="cat-card" href="catalog.html#pre">
           <div class="cat-title">Pre-entreno</div>
           <div class="cat-sub">Energía + enfoque</div>
         </a>
-
-        <a class="cat-card" href="catalog.html?cat=Definicion">
+        <a class="cat-card" href="catalog.html#definicion">
           <div class="cat-title">Definición</div>
           <div class="cat-sub">Corte + control</div>
         </a>
       </div>
 
       <div class="center-actions">
-        <a class="btn-primary btn-inline" href="catalog.html">Ver catálogo completo</a>
+        <a href="catalog.html" class="btn-primary btn-inline">Ver catálogo completo</a>
       </div>
     </div>
   </section>
 
   <!-- CÓMO COMPRAR -->
-  <section class="section" id="como-comprar">
+  <section id="como-comprar" class="section">
     <div class="container">
       <div class="section-head">
         <h2>Cómo comprar</h2>
@@ -114,13 +114,11 @@
           <h3>Elegí tu producto</h3>
           <p>Desde el catálogo o tocando una oferta del banner.</p>
         </div>
-
         <div class="step-card">
           <div class="step-num">2</div>
           <h3>Escribinos por WhatsApp</h3>
           <p>El mensaje ya sale listo. Vos solo enviás.</p>
         </div>
-
         <div class="step-card">
           <div class="step-num">3</div>
           <h3>Coordinamos entrega</h3>
@@ -133,23 +131,19 @@
           <h3>¿No sabés cuál te conviene?</h3>
           <p>Decinos tu objetivo y presupuesto. Te armamos una opción directa.</p>
         </div>
-        <a class="btn-primary btn-inline"
-           href="https://wa.me/59169259870?text=Hola%20PRIME%2C%20quiero%20una%20recomendaci%C3%B3n.%20Mi%20objetivo%20es%3A%20____%20y%20mi%20presupuesto%20es%3A%20____."
-           target="_blank" rel="noopener">
-          Hablar por WhatsApp
-        </a>
+        <a class="btn-primary" href="https://wa.me/59169259870" target="_blank">Hablar por WhatsApp</a>
       </div>
     </div>
   </section>
 
   <!-- QUIÉNES SOMOS -->
-  <section class="section section-alt" id="quienes-somos">
+  <section id="puntos" class="section section-alt">
     <div class="container">
       <div class="section-head">
         <h2>¿Quiénes somos?</h2>
         <p>
-          PRIME Bolivia es una tienda enfocada en suplementos para rendimiento real.
-          Apostamos por algo simple: producto correcto, precio claro y respuesta rápida.
+          PRIME Bolivia es una tienda enfocada en suplementos para rendimiento real. Apostamos por algo simple:
+          producto correcto, precio claro y respuesta rápida.
         </p>
       </div>
 
@@ -157,11 +151,8 @@
         <div class="about-card">
           <h3>Una experiencia de compra moderna en Bolivia</h3>
           <p>
-            Estamos impulsando una forma de comprar suplementos más directa: ofertas claras, comunicación por WhatsApp
-            y entregas coordinadas sin pérdida de tiempo.
-          </p>
-          <p class="about-note">
-            Queremos que comprar suplementos sea tan fácil como elegir, escribir y recibir.
+            Estamos construyendo una experiencia de compra directa, rápida y sin perder tiempo.
+            Coordinación por WhatsApp, entrega a Bolivia y soporte humano real.
           </p>
         </div>
 
@@ -173,19 +164,24 @@
             <li>Atención rápida</li>
           </ul>
           <p class="about-note">
-            Estamos construyendo la <strong>primera experiencia e-commerce</strong> enfocada 100% en suplementos,
-            pensada para Bolivia.
+            Impulsamos el modelo de e-commerce de suplementos en Bolivia.
           </p>
         </div>
-      </div>
-
-      <div class="footer">
-        © 2026 PRIME Bolivia — Suplementos
       </div>
     </div>
   </section>
 
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      © 2026 PRIME Bolivia — Suplementos
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
   <script src="assets/js/cart.js"></script>
   <script src="assets/js/slider.js"></script>
+  <script src="assets/js/header-scroll.js"></script>
+
 </body>
 </html>

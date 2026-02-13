@@ -554,3 +554,30 @@ body{
 
   .section{ padding:42px 0; }
 }
+
+/* =========================
+   HEADER: hide on scroll down / show on scroll up
+========================= */
+.header{
+  transition: transform .22s ease, background .22s ease, border-color .22s ease;
+  will-change: transform;
+}
+
+.header.header-hidden{
+  transform: translateY(-110%);
+}
+
+/* Logo más grande y más "botón" */
+.brand{
+  cursor: pointer;
+}
+
+.logo{
+  height: 46px; /* antes 40 */
+}
+
+@media (max-width:520px){
+  .logo{
+    height: 44px;
+  }
+}
