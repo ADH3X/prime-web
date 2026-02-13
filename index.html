@@ -10,18 +10,25 @@
 
   <header class="header">
     <div class="container header-inner">
+      <!-- LOGO = INICIO -->
       <a href="index.html" class="brand" aria-label="Ir al inicio">
-        <img src="assets/img/logo.png" alt="PRIME Bolivia" class="logo"/>
+        <img src="assets/img/logo.png" alt="PRIME" class="logo"/>
+        <div class="brand-text">
+          <span class="brand-name">PRIME</span>
+          <span class="brand-tag">Suplementos verificados • Bolivia</span>
+        </div>
       </a>
 
-      <nav class="nav">
-        <a href="catalog.html">Catálogo</a>
-        <a href="offers.html" class="nav-highlight">Ofertas</a>
-        <a href="#como-comprar">Cómo comprar</a>
-        <a href="entregas.html">Puntos de entrega</a>
-        <a href="#" id="cart-btn">Carrito (<span id="cart-count">0</span>)</a>
-      </nav>
+      <nav class="nav" aria-label="Navegación principal">
+        <a class="nav-link" href="catalog.html">Catálogo</a>
+        <a class="nav-link" href="index.html#ofertas">Ofertas</a>
+        <a class="nav-link" href="index.html#como-comprar">Cómo comprar</a>
+        <a class="nav-link" href="index.html#entrega">Puntos de entrega</a>
 
+        <a class="nav-link nav-cart" href="#" id="cart-btn">
+          Carrito <span class="cart-badge" id="cart-count">0</span>
+        </a>
+      </nav>
     </div>
   </header>
 

@@ -470,3 +470,137 @@ body{
   color: var(--gold);
   font-weight: 800;
 }
+
+
+/* =========================
+   HEADER PREMIUM (sin exagerar)
+========================= */
+.header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 14px;
+  padding: 14px 0;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  text-decoration:none;
+  min-width: 220px;
+}
+
+.logo{
+  height: 40px;
+  width: auto;
+  display:block;
+}
+
+.brand-text{
+  display:flex;
+  flex-direction:column;
+  line-height: 1.1;
+}
+
+.brand-name{
+  color: var(--text);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-size: 14px;
+}
+
+.brand-tag{
+  margin-top: 4px;
+  color: rgba(245,245,245,0.60);
+  font-size: 12px;
+}
+
+/* NAV */
+.nav{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.nav-link{
+  color: rgba(245,245,245,0.92);
+  text-decoration:none;
+  padding: 10px 12px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform .12s ease, border-color .12s ease, background .12s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover{
+  background: rgba(212,175,55,0.10);
+  border-color: rgba(212,175,55,0.28);
+  transform: translateY(-1px);
+}
+
+/* Carrito */
+.nav-cart{
+  border-color: rgba(212,175,55,0.18);
+  background: rgba(212,175,55,0.08);
+}
+
+.cart-badge{
+  margin-left: 8px;
+  display:inline-grid;
+  place-items:center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 999px;
+
+  background: var(--gold);
+  color: #000;
+  font-weight: 900;
+  font-size: 12px;
+}
+
+/* MÓVIL: que NO se vaya a 2 filas, sino que haga scroll horizontal */
+@media (max-width: 900px){
+  .header-inner{
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .brand{
+    min-width: unset;
+    justify-content: center;
+  }
+
+  .nav{
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 6px 2px;
+    gap: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav::-webkit-scrollbar{
+    height: 0px;
+  }
+}
+
+@media (max-width: 520px){
+  .logo{ height: 34px; }
+  .brand-name{ font-size: 13px; }
+  .brand-tag{ font-size: 11px; }
+}
