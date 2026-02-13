@@ -465,3 +465,8 @@ body{
 /* FIX: solo la slide activa debe recibir click */
 .hero-slider .slide { pointer-events: none; z-index: 1; }
 .hero-slider .slide.active { pointer-events: auto; z-index: 2; }
+
+.nav-highlight{
+  color: var(--gold);
+  font-weight: 800;
+}
