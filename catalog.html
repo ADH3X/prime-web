@@ -3,50 +3,223 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Catálogo – PRIME</title>
+  <title>Catálogo – PRIME Bolivia</title>
   <link rel="stylesheet" href="assets/css/styles.css"/>
 </head>
 <body>
+
+  <!-- HEADER (igual estilo premium del index) -->
   <header class="header">
     <div class="container header-inner">
-      <img src="assets/img/logo.png" alt="PRIME" class="logo"/>
-      <nav>
-        <a href="index.html">Inicio</a>
-        <a href="catalog.html">Catálogo</a>
-        <a href="#" id="cart-btn">Carrito (<span id="cart-count">0</span>)</a>
+
+      <a class="brand" href="index.html" aria-label="Inicio">
+        <img class="logo" src="assets/img/logo.png" alt="PRIME Bolivia"/>
+        <div class="brand-text">
+          <div class="brand-name">PRIME</div>
+          <div class="brand-tag">Suplementos verificados • Bolivia</div>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <a class="nav-link" href="index.html">Inicio</a>
+        <a class="nav-link nav-highlight" href="catalog.html">Catálogo</a>
+        <a class="nav-link" href="index.html#ofertas">Ofertas</a>
+        <a class="nav-link" href="index.html#como-comprar">Cómo comprar</a>
+        <a class="nav-link nav-cart" href="cart.html">
+          Carrito <span class="cart-badge" id="cart-count">0</span>
+        </a>
       </nav>
+
     </div>
   </header>
 
-  <section class="container">
-    <h1>Catálogo</h1>
+  <!-- HERO / PROMESA + CONFIANZA -->
+  <section class="section section-tight">
+    <div class="container">
+      <div class="section-head">
+        <h1 class="hero-title">Catálogo PRIME</h1>
+        <p class="hero-subtitle">
+          Elegí rápido. Comprás por WhatsApp sin vueltas. Productos verificados y coordinación de entrega con seguimiento.
+        </p>
+      </div>
 
-    <input type="text" id="search" placeholder="Buscar producto..." />
-
-    <div id="products" class="grid"></div>
-
-    <!-- FINALIZAR COMPRA (2 números de WhatsApp) -->
-    <div class="checkout-box">
-      <h3>Finalizar compra</h3>
-      <p>Elegí por dónde querés hacer tu pedido:</p>
-
-      <div class="wa-buttons">
-        <button class="btn-primary" onclick="checkoutWhatsApp1()">
-          Comprar por WhatsApp (77676446)
-        </button>
-
-        <button class="btn-primary" onclick="checkoutWhatsApp2()">
-          Comprar por WhatsApp (69259870)
-        </button>
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>Productos verificados</h3>
+          <p>Stock real, precios claros y asesoría directa según tu objetivo.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Compra por WhatsApp</h3>
+          <p>Armás el carrito y enviás el pedido en un mensaje.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Entrega coordinada</h3>
+          <p>Confirmamos pago y envío según tu zona. Sin sorpresas.</p>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- COMPRA RÁPIDA (BUSCADOR + FILTROS) -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <h2>Compra rápida</h2>
+        <p>Buscá tu producto y agregalo al carrito en segundos.</p>
+      </div>
+
+      <!-- Barra de búsqueda + filtros -->
+      <div class="catalog-toolbar">
+        <input type="text" id="search" class="catalog-search" placeholder="Buscar: creatina, proteína, pre-entreno..." />
+
+        <select id="filter-category" class="catalog-select">
+          <option value="all">Todas las categorías</option>
+          <option value="creatina">Creatina</option>
+          <option value="proteina">Proteína</option>
+          <option value="pre">Pre-entreno</option>
+          <option value="definicion">Definición</option>
+          <option value="energia">Energía</option>
+          <option value="masa">Masa</option>
+        </select>
+
+        <select id="sort" class="catalog-select">
+          <option value="featured">Ordenar: recomendado</option>
+          <option value="price_asc">Precio: menor a mayor</option>
+          <option value="price_desc">Precio: mayor a menor</option>
+          <option value="name_asc">Nombre: A-Z</option>
+        </select>
+
+        <a href="cart.html" class="btn-primary btn-inline">Ver carrito</a>
+      </div>
+
+      <!-- Chips de categorías (rápido para móvil) -->
+      <div class="cat-grid" style="margin-top:14px;">
+        <a class="cat-card" href="#cat-creatina">
+          <div class="cat-title">Creatina</div>
+          <div class="cat-sub">Fuerza + rendimiento</div>
+        </a>
+        <a class="cat-card" href="#cat-proteina">
+          <div class="cat-title">Proteína</div>
+          <div class="cat-sub">Masa + recuperación</div>
+        </a>
+        <a class="cat-card" href="#cat-pre">
+          <div class="cat-title">Pre-entreno</div>
+          <div class="cat-sub">Energía + enfoque</div>
+        </a>
+        <a class="cat-card" href="#cat-definicion">
+          <div class="cat-title">Definición</div>
+          <div class="cat-sub">Corte + control</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFERTAS / DESTACADOS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Recomendados y ofertas</h2>
+        <p>Los que más salen. Si estás indeciso, arrancá por acá.</p>
+      </div>
+
+      <div class="featured-grid" id="featured-products">
+        <!-- (Opcional) Si querés, tu app.js puede inyectar aquí 4 productos destacados -->
+      </div>
+
+      <div class="center-actions" style="margin-top:16px;">
+        <a class="btn-primary btn-inline" href="#all-products">Ver todo el catálogo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO COMPLETO (TU APP.JS RENDERIZA AQUÍ) -->
+  <section id="all-products" class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <h2>Todo el catálogo</h2>
+        <p>
+          Seleccioná tus productos y agregalos al carrito. Cuando termines, finalizás por WhatsApp.
+        </p>
+      </div>
+
+      <!-- Anclas por categoría (si tu app.js las usa) -->
+      <div class="catalog-anchors">
+        <a href="#cat-creatina" class="nav-link">Creatina</a>
+        <a href="#cat-proteina" class="nav-link">Proteína</a>
+        <a href="#cat-pre" class="nav-link">Pre-entreno</a>
+        <a href="#cat-definicion" class="nav-link">Definición</a>
+      </div>
+
+      <!-- CONTENEDOR PRINCIPAL DE PRODUCTOS -->
+      <div id="products" class="grid"></div>
+    </div>
+  </section>
+
+  <!-- FINALIZAR COMPRA (CTA FUERTE) -->
+  <section class="section">
+    <div class="container">
+      <div class="help-cta">
+        <div>
+          <h3>¿Listo para pedir?</h3>
+          <p>Entrás al carrito y enviás tu pedido por WhatsApp. Respuesta rápida y coordinación clara.</p>
+        </div>
+        <a class="btn-primary" href="cart.html">Ir al carrito</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA STICKY (MÓVIL/PC) -->
+  <div class="sticky-checkout" id="sticky-checkout">
+    <div class="sticky-left">
+      <div class="sticky-title">Carrito</div>
+      <div class="sticky-sub"><span id="sticky-items">0</span> producto(s)</div>
+    </div>
+    <div class="sticky-right">
+      <a class="btn-primary" href="cart.html">Finalizar</a>
+    </div>
+  </div>
+
   <footer class="footer">
-    <p>© 2026 PRIME Suplementos</p>
+    <div class="container">
+      © 2026 PRIME Bolivia — Suplementos
+    </div>
   </footer>
 
-  <script src="assets/js/app.js"></script>
+  <!-- SCRIPTS -->
   <script src="assets/js/cart.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <!-- UI extra del catálogo (no depende de librerías) -->
+  <script>
+    // Actualiza badge y sticky (usa cart.js si ya tiene lógica; esto es backup visual)
+    function setCartUI(count){
+      const c1 = document.getElementById("cart-count");
+      const c2 = document.getElementById("sticky-items");
+      if (c1) c1.textContent = count;
+      if (c2) c2.textContent = count;
+      const sticky = document.getElementById("sticky-checkout");
+      if (sticky) sticky.style.display = (count > 0) ? "flex" : "none";
+    }
+
+    // Intento: si tu cart.js expone algo, úsalo. Si no, fallback a localStorage típico.
+    function readCartCount(){
+      try{
+        const raw = localStorage.getItem("cart");
+        if(!raw) return 0;
+        const cart = JSON.parse(raw);
+        if(Array.isArray(cart)) return cart.reduce((acc, it) => acc + (Number(it.qty)||1), 0);
+        if(typeof cart === "object") return Object.values(cart).reduce((acc, it) => acc + (Number(it.qty)||1), 0);
+        return 0;
+      }catch(e){
+        return 0;
+      }
+    }
+
+    setCartUI(readCartCount());
+
+    // Si tu app.js filtra, conectá estos inputs a tu lógica.
+    // Por ahora, solo deja listo el UI.
+  </script>
+
 </body>
 </html>
